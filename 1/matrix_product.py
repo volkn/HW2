@@ -24,7 +24,7 @@ if (len(first) == 2)and (len(second) == 2):
                     row.append(int(number))
                 matrix_1.append(row)
                 row = []
-        print("your first matrix is: " + matrix_1)
+        print("your first matrix is: {}".format(matrix_1))
         for i in range(int(second[0])):
             second_matrix_rows = str(input("insert row {}, elements with space between them: ".format(i)))
             b = second_matrix_rows.split(" ")
@@ -36,7 +36,7 @@ if (len(first) == 2)and (len(second) == 2):
                 matrix_2.append(row)
                 row = []
     
-        print("your second matrix is: " + matrix_2)
+        print("your second matrix is: {}".format(matrix_2))
     else:
         print("first matrices column number must be equal to seconds row numbers")
 else:
@@ -50,9 +50,13 @@ def matrix_product(A,B):
     colB = len(B[0])
 
     if colA == rowB:
-        result=[[0,0,0],
-                [0,0,0],
-                [0,0,0]]
+        result = []
+        for i in range(rowA):
+            result_row = []
+            for k in range(colB):
+                result_row.append(0)
+            result.append(result_row)
+        print(result)
 
         for i in range(rowA):
             for j in range(colB):
