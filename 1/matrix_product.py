@@ -56,7 +56,6 @@ def matrix_product(A,B):
             for k in range(colB):
                 result_row.append(0)
             result.append(result_row)
-        print(result)
 
         for i in range(rowA):
             for j in range(colB):
