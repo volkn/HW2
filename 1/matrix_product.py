@@ -1,62 +1,62 @@
-first_matrix_type = str(input("insert the type of your first matrix, like 3x4: "))
+import sys
 
-while first_matrix_type[0] != type(int()) and type(first_matrix_type[2] ) != type(int()) and first_matrix_type[1] != "x":
-    first_matrix_type = str(input("insert the type of your first matrix again, like 3x4: "))
+f = open("matrix.txt","w")
+question = int(input("How many matrix do you wont "))
+matrices = []
 
-second_matrix_type = str(input("insert the type of your second matrix, like 4x3: "))
-while second_matrix_type[0] != type(int()) and type(second_matrix_type[2] ) != type(int()) and second_matrix_type[1] != "x":
-    second_matrix_type = str(input("insert the type of your second matrix again, like 3x4: "))
+for i in range(question):
+    M_type  = str(input("insert the type of your first matrix, like 3x4: "))
+    while M_type[0] != type(int()) and type(M_type[2] ) != type(int()) and M_type[1] != "x":
+        M_type = str(input("insert the type of your first matrix again, like 3x4: "))
+    matrices.append(M_type)
 
-first = first_matrix_type.split("x")
-second = second_matrix_type.split("x")
+print("your matrix types: ",matrices)
+print("your matrix types: ",matrices, file = f)
+
+a = 0
+while True:
+    if matrices[a][-1] != matrices[a+1][0]:
+        print("your matrices cant be multiplied")
+        sys.exit("start from the begining")
+    else:
+        a = a + 1
+        if a == len(matrices) -1:
+            break
+
 
 matrix_1 = []
 matrix_2 = []
 row = []
-if (len(first) == 2)and (len(second) == 2):
-    if (first[1] == second[0]):
-        for i in range(int(first[0])):
-            first_matrix_rows = str(input("insert row {}, elements with space between them: ".format(i)))
-            a = first_matrix_rows.split(" ")
-            while True:
-                if len(a) == int(first[1]):
-                    print("okkey now you can insert the next row")
-                    break
-                else:
-                    print("you can only instert rows, now insert first matrix from the first row")
-                    first_matrix_rows = str(input("insert row {}, elements with space between them: ".format(i)))
-                    a = first_matrix_rows.split(" ")
 
-            for number in a:
-                row.append(int(number))
-            matrix_1.append(row)
-            row = []
-    
-        for i in range(int(second[0])):
-            second_matrix_rows = str(input("insert row {}, elements with space between them: ".format(i)))
-            b = second_matrix_rows.split(" ")
-            while True:
-                if len(b) == int(second[1]):
-                    print("okkey now you can insert the next row")
-                    break
-                else:
-                    print("you can only instert rows, now insert second matrix from the first row")
-                    second_matrix_rows = str(input("insert row {}, elements with space between them: ".format(i)))
-                    b = second_matrix_rows.split(" ")
+matrixTypeList = []
+for i in matrices:
+    thing = i.split("x")
+    matrixTypeList.append(thing)
 
-            for number in b:
-                row.append(int(number))
-            matrix_2.append(row)
-            row = []
-    
-    else:
-        print("first matrices column number must be equal to seconds row numbers")
-    
-else:
-        print("matrices can be have rows and columns")
 
-print("your first matrix is: {}".format(matrix_1))
-print("your second matrix is: {}".format(matrix_2))
+lastMatrixList = []
+for matrix_indicator in range(len(matrices)):
+    fullMatrix = []
+    for i in range(int(matrixTypeList[matrix_indicator][0])):
+        matrix_rows = str(input("insert row {}'s, elements with space between them: ".format(i)))
+        a = matrix_rows.split(" ")
+        while True:
+            if len(a) == int(matrixTypeList[matrix_indicator][1]):
+                print("oket now you can insert the next row")
+                break
+            else:
+                print("you can only insert rows, now insert first matrix from the first row")
+                matrix_rows = str(input("insert row {}, elements with space between them: ".format(i)))
+                a = matrix_rows.split(" ")
+        row = []
+        for number in a:
+            row.append(int(number))
+        fullMatrix.append(row)
+        row = []
+    lastMatrixList.append(fullMatrix)
+
+print("your matrices", lastMatrixList)
+print("your matrices", lastMatrixList, file = f)
 
 def matrix_product(A,B):
     rowA = len(A)
@@ -64,20 +64,28 @@ def matrix_product(A,B):
     colA = len(A[0])
     colB = len(B[0])
 
-    if colA == rowB:
-        result = []
-        for i in range(rowA):
-            result_row = []
-            for k in range(colB):
-                result_row.append(0)
-            result.append(result_row)
+    result = []
+    for i in range(rowA):
+        result_row = []
+        for k in range(colB):
+            result_row.append(0)
+        result.append(result_row)
 
-        for i in range(rowA):
-            for j in range(colB):
-                for k in range(colA):
-                    result[i][j] += A[i][k] * B[k][j]
-        return result
+    for i in range(rowA):
+        for j in range(colB):
+            for k in range(colA):
+                result[i][j] += A[i][k] * B[k][j]
+    return result
+
+def operate(a=2, result_matrix=matrix_product(lastMatrixList[0], lastMatrixList[1])):
+    if a == len(lastMatrixList):
+        print("result is: ",result_matrix)
+        print("result is: ",result_matrix, file = f)
     else:
-        print("matrices cant be multiplied")
+        result_matrix = matrix_product(result_matrix,lastMatrixList[a])
+        a = a + 1
+        operate(a, result_matrix)
 
-print(matrix_product(matrix_1,matrix_2))
+operate()
+f.close()
+
