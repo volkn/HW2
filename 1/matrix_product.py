@@ -8,15 +8,6 @@ type_m = []
 text = f.read()
 text = text.rstrip('\n')
 matrix_list = []
-some_num = 1
-for i in text:
-    if i != "*":
-        some_num +=1
-
-if some_num != len(some_num):
-    sys.exit("nope")
-
-del some_num
 
 how_many_matrix = 0
 for i in text:
