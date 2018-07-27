@@ -8,6 +8,15 @@ type_m = []
 text = f.read()
 text = text.rstrip('\n')
 matrix_list = []
+some_num = 1
+for i in text:
+    if i != "*":
+        some_num +=1
+
+if some_num != len(some_num):
+    sys.exit("nope")
+
+del some_num
 
 how_many_matrix = 0
 for i in text:
@@ -68,9 +77,11 @@ print(matrix_types)
 
 true_mat_list = []
 for i in matrix_list:
-    if type(eval(i)) == type([]):
-        true_mat_list.append(eval(i))
-
+    try:
+        if type(eval(i)) == type([]):
+            true_mat_list.append(eval(i))
+    except:
+        sys.exit("nope")
 def matrix_product(A,B):
     rowA = len(A)
     rowB = len(B)
