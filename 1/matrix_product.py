@@ -1,12 +1,12 @@
 import sys
 
 f = open("matrix.txt","r+")
+f2 = open("output.txt","w+")
 t = 0
 info = []
 type_m = []
 text = f.read()
-#mList = text.split(",")
-#print(mList)
+text = text.rstrip('\n')
 matrix_list = []
 
 how_many_matrix = 0
@@ -14,20 +14,58 @@ for i in text:
     if i == "*":
         how_many_matrix += 1
 
-a = 0
-for i in text:
-    if i == "[":
-        a = a + 1
-
-#mlist = text.replace("[","",12)
 mlist = text.strip()
 matrix_list = mlist.split("*")
+
+for i in matrix_list:
+    for j in range(len(i)):
+        if type(i[j]) == type(int()) or i[j] == "]" or i[j] == "[" or i[j] == ",":
+            pass
+        elif i[j] == ".":
+            try:
+                if type(eval(i[j+1])) == type(int()):
+                    pass
+            except:
+                sys.exit("you can only put numbers in matrices")
+        else:
+            try:
+                if type(eval(i[j])) == type(int()):
+                    pass
+            except:
+                sys.exit("you can only put numbers in matrices")
+a = 0
 b = 0
-for i in matrix_list[0]:
-    if i != "]":
-        b += 1
-    else:
+c = 0
+matrix_types = []
+for i in matrix_list:
+    for char in i:
+        if char == "[":
+            a += 1
+        elif char == "]":
+            b += 1
+        elif char == ",":
+            c += 1
+    c = c+1
+    if a != b:
+        sys.exit("start from the begining")
+    c = c / (a - 1)
+    c = int(c)
+    mat_type = [a-1,c]
+    matrix_types.append(mat_type)
+    del mat_type
+    a = 0
+    b = 0
+    c = 0
+
+for i in range(len(matrix_types)):
+    if i == len(matrix_types) - 1:
         break
+    elif matrix_types[i][1] != matrix_types[i+1][0]:
+        sys.exit("your input wrong")
+
+print("matrix types")
+print(matrix_types)
+
 true_mat_list = []
 for i in matrix_list:
     if type(eval(i)) == type([]):
@@ -53,15 +91,19 @@ def matrix_product(A,B):
     return result
 
 res = []
+s = 0
 
-for i in range(how_many_matrix + 1):
+for i in range(how_many_matrix):
+    s += 1
     if res == []:
-        res = matrix_product(true_mat_list[i],true_mat_list[i+1])
+        res = matrix_product(true_mat_list[0],true_mat_list[1])
     else:
         res = matrix_product(res,true_mat_list[i])
 
 print(res)
-
+print(res,file=f2)
+f.close()
+f2.close()
 
 #question = int(input("How many matrix do you wont "))
 #matrices = []
