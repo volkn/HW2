@@ -7,16 +7,24 @@ info = []
 type_m = []
 text = f.read()
 text = text.rstrip('\n')
+if text[0] != "[" and text[-1] != "]":
+    sys.exit("you should insert matrices")
 matrix_list = []
+
 
 how_many_matrix = 0
 for i in text:
     if i == "*":
         how_many_matrix += 1
 
+if how_many_matrix == 0:
+    sys.exit("you should insert matrices, more than one.")
+
 mlist = text.strip()
 matrix_list = mlist.split("*")
 
+#for i in matrix_list:
+#    if i[]
 for i in matrix_list:
     for j in range(len(i)):
         if type(i[j]) == type(int()) or i[j] == "]" or i[j] == "[" or i[j] == ",":
@@ -47,7 +55,7 @@ for i in matrix_list:
             c += 1
     c = c+1
     if a != b:
-        sys.exit("start from the begining")
+        sys.exit("your row's are wrong")
     c = c / (a - 1)
     c = int(c)
     mat_type = [a-1,c]
@@ -61,7 +69,7 @@ for i in range(len(matrix_types)):
     if i == len(matrix_types) - 1:
         break
     elif matrix_types[i][1] != matrix_types[i+1][0]:
-        sys.exit("your input wrong")
+        sys.exit("your matrix types are nat god for multiplying")
 
 print("matrix types")
 print(matrix_types)
@@ -73,6 +81,7 @@ for i in matrix_list:
             true_mat_list.append(eval(i))
     except:
         sys.exit("nope")
+
 def matrix_product(A,B):
     rowA = len(A)
     rowB = len(B)
@@ -94,18 +103,20 @@ def matrix_product(A,B):
 
 res = []
 s = 0
+try:
+    for i in range(how_many_matrix):
+        s += 1
+        if res == []:
+            res = matrix_product(true_mat_list[0],true_mat_list[1])
+        else:
+            res = matrix_product(res,true_mat_list[i])
+    print(res)
+    print(res,file=f2)
+    f.close()
+    f2.close()
+except:
+    sys.exit("some unexpected mistake")
 
-for i in range(how_many_matrix):
-    s += 1
-    if res == []:
-        res = matrix_product(true_mat_list[0],true_mat_list[1])
-    else:
-        res = matrix_product(res,true_mat_list[i])
-
-print(res)
-print(res,file=f2)
-f.close()
-f2.close()
 
 #question = int(input("How many matrix do you wont "))
 #matrices = []
