@@ -69,7 +69,7 @@ for i in range(len(matrix_types)):
     if i == len(matrix_types) - 1:
         break
     elif matrix_types[i][1] != matrix_types[i+1][0]:
-        sys.exit("your matrix types are nat god for multiplying")
+        sys.exit("your matrix types are not good for multiplying")
 
 print("matrix types")
 print(matrix_types)
