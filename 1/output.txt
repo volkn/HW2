@@ -1,1 +1,4 @@
 [[2, 14, 16, 6], [3.2, 27.200000000000003, 30.400000000000002, 7.2]]
+Namespace(func=<function run at 0x7f37da1c2730>, input_file='matrix.txt', output_file=None, screen_in_out_value=False, screen_output_value=False, version=False)
+matrices: 
+[[22.5, 31.5], [22.5, 31.5]]
