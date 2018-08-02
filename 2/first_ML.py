@@ -26,9 +26,10 @@ for i in list_x:
 line_y = np.array(line_y)
 
 distances = list_y - line_y
+print(distances)
 #print(list_y)
 a = 0
-for i in list_y:
+for i in distances:
     a += i
 print(a)
 
