@@ -25,7 +25,7 @@ for i in list_x:
 
 line_y = np.array(line_y)
 
-list_y = list_y - line_y
+distances = list_y - line_y
 #print(list_y)
 a = 0
 for i in list_y:
@@ -34,5 +34,5 @@ print(a)
 
 #print(line_y)
 #print(line_y)
-#plt.scatter(list_x, list_y)
-#plt.show()
+plt.scatter(list_x, list_y)
+plt.show()
