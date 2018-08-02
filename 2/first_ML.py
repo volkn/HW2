@@ -3,37 +3,46 @@ import numpy as np
 import matplotlib 
 from sympy import * 
 
-rng = np.random.RandomState(1)
-list_x = 5 * rng.rand(50)
-list_y = 2 * list_x - 5 + rng.randn(50)
-#print(list_x)
-#print(list_y)
+rng = np.random.RandomState()
+X1 = 5 * rng.rand(50)
+Y = 2 * X1 - 5 + rng.randn(50)
+#print(X1)
+#print(Y)
 line_tuples_list = []
 
-line_y = []
 #x = Symbol('x')
 #y = Symbol('y')
-m = Symbol('m')
-n = Symbol('n')
+theta0 = Symbol('m')
+theta1 = Symbol('n')
 
-line_y = []
+h_X1 = []
 y = 0
-for i in list_x:
-    y = m * i + n
-    line_y.append(y)
+for i in X1:
+    y = theta0 * i + theta1
+    h_X1.append(y)
     y = 0
 
-line_y = np.array(line_y)
+h_X1 = np.array(h_X1)
 
-distances = list_y - line_y
-print(distances)
-#print(list_y)
-a = 0
+
+distances = []
+
+for i in range(len(h_X1)):
+    distances.append((h_X1[i] - Y[i])**2)
+#print(distances)
+
+distances = np.array(distances)
+
+#distances = Y - h_X1
+#print(distances)
+
+J = 0
 for i in distances:
-    a += i
-print(a)
+    J += i
 
+J = J / (2*theta0)
+print(J)
 #print(line_y)
 #print(line_y)
-plt.scatter(list_x, list_y)
+plt.scatter(X1, Y)
 plt.show()
