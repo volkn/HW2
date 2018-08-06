@@ -41,6 +41,7 @@ for i in distances:
     J += i
 
 J = J / (2*theta0)
+print(solve(J, theta0))
 print(J)
 #print(line_y)
 #print(line_y)
