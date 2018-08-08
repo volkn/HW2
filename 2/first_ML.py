@@ -1,39 +1,48 @@
 import matplotlib.pyplot as plt 
 import numpy as np 
 import matplotlib 
-from sympy import * 
+
 
 rng = np.random.RandomState(1)
-list_x = 5 * rng.rand(50)
-list_y = 2 * list_x - 5 + rng.randn(50)
-#print(list_x)
-#print(list_y)
-line_tuples_list = []
+X = np.array(list(map(lambda x: [5*x], rng.rand(50))))
+y = np.array(list(map(lambda x: (x[0]*0.4+rng.rand(1))[0], X)))
 
-line_y = []
-#x = Symbol('x')
-#y = Symbol('y')
-m = Symbol('m')
-n = Symbol('n')
+m=len(X)
+bias=1.1
+theta=np.array([1.1])
+def h(Xi):
+    return np.matmul(theta, np.transpose(Xi))+bias
 
-line_y = []
-y = 0
-for i in list_x:
-    y = m * i + n
-    line_y.append(y)
-    y = 0
+def J(derivate=False,alfa=0,thetai=0):
+    sum=0
+    if(derivate):
+        if(thetai==0):
+            for i in range(m):
+                sum+=(h(X[i])-y[i])
+        else:
+            for i in range(m):
+                sum+=(h(X[i])-y[i])*X[i][thetai-1]
+        return alfa*(sum/m)
+    else:
+        for i in range(m):
+            sum+=(h(X[i])-y[i])**2
+        return sum/(2*m)
 
-line_y = np.array(line_y)
+def gradient_descent():
+    global bias,theta
+    alfa = 0.001
+    for i in range(7000):
+        bias = bias - J(derivate=True,alfa=alfa,thetai=0)
+        for k in range(len(theta)):
+            theta[k] = theta[k] - J(derivate=True,alfa=alfa,thetai=k+1)
+            if(i%200==0):
+                print("cost: ",J(derivate=False))
 
-distances = list_y - line_y
-print(distances)
-#print(list_y)
-a = 0
-for i in distances:
-    a += i
-print(a)
+gradient_descent()
 
-#print(line_y)
-#print(line_y)
-plt.scatter(list_x, list_y)
+print("theta,bias: ",theta,bias)
+
+plt.scatter(X, y)
+plt.plot([0,6],[h([0]),h([6])],"r")
+
 plt.show()
